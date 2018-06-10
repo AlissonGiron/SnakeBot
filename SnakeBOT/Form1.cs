@@ -38,11 +38,11 @@ namespace SnakeBOT
             // transformo os pixels do mapa em Nodes do grafo
             LMap.ForEach(p => LGraph.AddNode(new Node() { Info = p }));
 
-
             AuxPath = new List<PathNode>();
 
             // Crio as arestas
             LGraph.CreateEdges();
+
             LGraph.SetTypes(LFactory.Image);
             LGraph.GetSnakeHead(LFactory.Image);
 
@@ -100,18 +100,13 @@ namespace SnakeBOT
                 AGraph.SetTypes(AFactory.Image);
                 AGraph.GetSnakeHead(AFactory.Image);
                 int qtd = AGraph.Nodes.Count(n => n.NodeType.Equals(NodeType.SnakeHead) || n.NodeType.Equals(NodeType.Snake));
-                AuxPath = FPlayManager.GetPath((Node)PrincipalPath.LastOrDefault()?.nextNode, PathNodes: PrincipalPath);
+                AuxPath = FPlayManager.GetPath((Node)PrincipalPath.LastOrDefault()?.nextNode);
             }
 
             Thread.CurrentThread.Abort();
         }
 
-        private void FindPossibilities()
-        {
-            FPlayManager.GetAllPaths(PrincipalPath);
-        }
-
-        Rectangle LRect = new Rectangle(new Point(0, 0), new Size(40, 40));
+        Rectangle LRect = new Rectangle(new Point(0, 0), new Size(50, 50));
 
         private void FollowPath(TileFactory AFactory, Graph AGraph)
         {
@@ -124,15 +119,17 @@ namespace SnakeBOT
                     wbSnake.BeginInvoke((Action)(() =>
                     {
                         wbSnake.Document.Focus();
+                        txtPos.Text = GetPathString(PrincipalPath);
                     }));
                 }
 
                 var LCurrPixel = ((Pixel)((Node)PrincipalPath.FirstOrDefault().currNode).Info);
-                LRect.X = LCurrPixel.Position.X - 20;
-                LRect.Y = LCurrPixel.Position.Y - 20;
+                LRect.X = LCurrPixel.Position.X - 30;
+                LRect.Y = LCurrPixel.Position.Y - 30;
 
                 Bitmap LBitmap = GetPixels(LRect);
                 if (!isSnakeHead(LBitmap)) continue;
+                Thread.Sleep(50);
 
                 string pos = FPlayManager.ControlSnakeToTarget(PrincipalPath.FirstOrDefault());
                 SendKeys.SendWait(pos);

@@ -17,6 +17,8 @@ namespace SnakeBOT
         public Node SnakeHead { get { return Graph.Nodes.FirstOrDefault(n => n.NodeType.Equals(NodeType.SnakeHead)); } }
         public Node Food { get { return Graph.Nodes.FirstOrDefault(n => n.NodeType.Equals(NodeType.Comida)); } }
 
+
+
         public PlayManager(Graph AGraph)
         {
             Graph = AGraph;
