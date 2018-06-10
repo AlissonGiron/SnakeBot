@@ -17,8 +17,6 @@ namespace SnakeBOT
         public Node SnakeHead { get { return Graph.Nodes.FirstOrDefault(n => n.NodeType.Equals(NodeType.SnakeHead)); } }
         public Node Food { get { return Graph.Nodes.FirstOrDefault(n => n.NodeType.Equals(NodeType.Comida)); } }
 
-
-
         public PlayManager(Graph AGraph)
         {
             Graph = AGraph;
@@ -33,7 +31,7 @@ namespace SnakeBOT
             // se passei algum node para terminar uso ele, senão uso a comida
             return BreadthFirstSearch(From ?? SnakeHead, To ?? Food);
         }
-        
+
         // Retorna a tecla que preciso usar para controlar a snake no momento
         public string ControlSnakeToTarget(PathNode ANode)
         {
@@ -186,5 +184,7 @@ namespace SnakeBOT
 
             return Direction.Left;
         }
+
+
     }
 }

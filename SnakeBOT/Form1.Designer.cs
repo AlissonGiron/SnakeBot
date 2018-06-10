@@ -32,6 +32,7 @@
             this.wbSnake = new System.Windows.Forms.WebBrowser();
             this.button1 = new System.Windows.Forms.Button();
             this.txtPos = new System.Windows.Forms.TextBox();
+            this.txtBorda = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnGerarGrafo
@@ -73,12 +74,20 @@
             this.txtPos.Size = new System.Drawing.Size(482, 20);
             this.txtPos.TabIndex = 4;
             // 
+            // txtBorda
+            // 
+            this.txtBorda.Location = new System.Drawing.Point(287, 55);
+            this.txtBorda.Name = "txtBorda";
+            this.txtBorda.Size = new System.Drawing.Size(482, 20);
+            this.txtBorda.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(801, 534);
+            this.Controls.Add(this.txtBorda);
             this.Controls.Add(this.txtPos);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnGerarGrafo);
@@ -88,8 +97,6 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,6 +108,7 @@
         private System.Windows.Forms.WebBrowser wbSnake;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox txtPos;
+        private System.Windows.Forms.TextBox txtBorda;
     }
 }
 

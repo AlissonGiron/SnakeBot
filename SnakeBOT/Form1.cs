@@ -43,11 +43,35 @@ namespace SnakeBOT
             // Crio as arestas
             LGraph.CreateEdges();
 
+            // define os tipos de cada quadrado do mapa
             LGraph.SetTypes(LFactory.Image);
+
+            // encontra a cabeça da snake
             LGraph.GetSnakeHead(LFactory.Image);
+
+            // ignora por enquanto, to testando
+            LGraph.FindBorderNodes();
 
             FPlayManager = new PlayManager(LGraph);
             PrincipalPath = AdjustPath(FPlayManager.GetPath());
+
+            //var t = new Thread(() =>
+            //{
+            //    while(true)
+            //    {
+            //        Node LNode = SnakeInBorder(LGraph);
+
+            //        if (LNode != null && wbSnake.IsHandleCreated)
+            //        {
+            //            wbSnake.BeginInvoke((Action)(() =>
+            //            {
+            //                txtBorda.Text = "Col: " + (LNode.Info as Pixel).Col + " | Row: " + (LNode.Info as Pixel).Row;
+            //            }));
+            //        }
+            //    }
+            //});
+
+            //t.Start();
 
             Task.Run(() =>
             {
@@ -106,7 +130,7 @@ namespace SnakeBOT
             Thread.CurrentThread.Abort();
         }
 
-        Rectangle LRect = new Rectangle(new Point(0, 0), new Size(50, 50));
+        Rectangle LRect = new Rectangle(new Point(0, 0), new Size(40, 40));
 
         private void FollowPath(TileFactory AFactory, Graph AGraph)
         {
@@ -114,7 +138,7 @@ namespace SnakeBOT
 
             while (PrincipalPath.Count > 0)
             {
-                if(IsHandleCreated)
+                if (IsHandleCreated)
                 {
                     wbSnake.BeginInvoke((Action)(() =>
                     {
@@ -124,12 +148,15 @@ namespace SnakeBOT
                 }
 
                 var LCurrPixel = ((Pixel)((Node)PrincipalPath.FirstOrDefault().currNode).Info);
-                LRect.X = LCurrPixel.Position.X - 30;
-                LRect.Y = LCurrPixel.Position.Y - 30;
+                LRect.X = LCurrPixel.Position.X - 20;
+                LRect.Y = LCurrPixel.Position.Y - 20;
 
                 Bitmap LBitmap = GetPixels(LRect);
-                if (!isSnakeHead(LBitmap)) continue;
-                Thread.Sleep(50);
+                if (!isSnakeHead(LBitmap))
+                {
+                    continue;
+                }
+
 
                 string pos = FPlayManager.ControlSnakeToTarget(PrincipalPath.FirstOrDefault());
                 SendKeys.SendWait(pos);
@@ -144,6 +171,28 @@ namespace SnakeBOT
 
                 PrincipalPath.RemoveAt(0);
             }
+        }
+
+        Rectangle Lrects2 = new Rectangle(new Point(0, 0), new Size(20, 20));
+
+
+        private Node SnakeInBorder(Graph AGraph)
+        {
+            foreach (var node in AGraph.BorderNodes)
+            {
+                var LCurrPixel = node.Info as Pixel;
+                Lrects2.X = LCurrPixel.Position.X - 20;
+                Lrects2.Y = LCurrPixel.Position.Y - 20;
+
+                Bitmap LBitmap = GetPixels(Lrects2);
+
+                if (isSnakeHead(LBitmap))
+                {
+                    return node;
+                }
+            }
+
+            return null;
         }
 
         Rectangle Lrects = new Rectangle(new Point(0, 0), new Size(10, 10));
@@ -207,21 +256,6 @@ namespace SnakeBOT
                 g.CopyFromScreen(ARectangle.Location, Point.Empty, ARectangle.Size);
 
             return bmp;
-        }
-
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void button1_Click(object sender, EventArgs e)

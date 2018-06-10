@@ -173,6 +173,8 @@ namespace SnakeBOT
 
             // Lista final do mapa
             List<Pixel> LFieldPixels = new List<Pixel>();
+            int row, col;
+            row = col = 0;
 
             // pego a borda de cima
             LPixelsInCenter.OrderBy(t => t.Position.Y).Take(MapSize.Width).ToList().ForEach(topTile =>
@@ -181,8 +183,12 @@ namespace SnakeBOT
                 LPixelsInCenter.OrderBy(t => t.Position.X).Take(MapSize.Height).ToList().ForEach(leftTile =>
                 {
                     // completo um retangulo adicionando pixels baseados nas posições das bordas
-                    LFieldPixels.Add(new Pixel(new Point(topTile.Position.X, leftTile.Position.Y), Color.Blue));
+                    LFieldPixels.Add(new Pixel(new Point(topTile.Position.X, leftTile.Position.Y), Color.Blue, row, col));
+                    row++;
                 });
+
+                row = 0;
+                col++;
             });
 
             return LFieldPixels;
