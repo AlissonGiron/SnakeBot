@@ -1,0 +1,8 @@
+C:\Users\aliss\source\repos\SnakeBOT\EDA\bin\Debug\EDA.dll
+C:\Users\aliss\source\repos\SnakeBOT\EDA\bin\Debug\EDA.pdb
+C:\Users\aliss\source\repos\SnakeBOT\EDA\obj\Debug\EDA.csprojResolveAssemblyReference.cache
+C:\Users\aliss\source\repos\SnakeBOT\EDA\obj\Debug\EDA.csproj.CoreCompileInputs.cache
+C:\Users\aliss\source\repos\SnakeBOT\EDA\obj\Debug\EDA.dll
+C:\Users\aliss\source\repos\SnakeBOT\EDA\obj\Debug\EDA.pdb
+C:\Users\aliss\source\repos\SnakeBOT\EDA\bin\Debug\Models.dll
+C:\Users\aliss\source\repos\SnakeBOT\EDA\bin\Debug\Models.pdb
