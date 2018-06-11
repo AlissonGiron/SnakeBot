@@ -16,6 +16,7 @@ namespace SnakeBOT
 
         public Node SnakeHead { get { return Graph.Nodes.FirstOrDefault(n => n.NodeType.Equals(NodeType.SnakeHead)); } }
         public Node Food { get { return Graph.Nodes.FirstOrDefault(n => n.NodeType.Equals(NodeType.Comida)); } }
+        public PriorityQueue<int, Node> NodeQueue { get; set; }
 
         public PlayManager(Graph AGraph)
         {
@@ -64,11 +65,11 @@ namespace SnakeBOT
             // variavel que controla quando encontrei a comida
             bool FoodAlreadyInPath = false;
 
-            Queue<Node> LQueue = new Queue<Node>();
+            PriorityQueue<int, Node> LQueue = new PriorityQueue<int, Node>();
 
             // adiciono o inicio na fila
             From.Visited = true;
-            LQueue.Enqueue(From);
+            LQueue.Enqueue(Heuristica(From.Info as Pixel, To.Info as Pixel), 0, From);
 
             while (LQueue.Count > 0)
             {
@@ -87,14 +88,15 @@ namespace SnakeBOT
                         LPathNodes = GetPathNodes(From, To);
 
                         // reseto tudo
-                        LQueue.Clear();
+                        LQueue = new PriorityQueue<int, Node>();
                         ResetGraph();
 
                         // indico que encontrei a comida, para entrar no proximo if
                         FoodAlreadyInPath = true;
 
                         // adiciono a comida na fila, pq meu caminho não termina na comida, e sim um pouco mais para frente
-                        LQueue.Enqueue(edge.To);
+                        LQueue.Enqueue(Heuristica(edge.To.Info as Pixel, To.Info as Pixel), 0, edge.To);
+
                         break;
                     }
 
@@ -105,12 +107,12 @@ namespace SnakeBOT
                         var AfterFood = GetPathNodes(To, edge.To);
 
                         // decidi utilizar mais 7 nodes dps da comida, cheguei nesse numero testando
-                        if (AfterFood.Count >= 7)
+                        if (AfterFood.Count >= 5)
                         {
                             LPathNodes.AddRange(AfterFood);
 
                             // limpo a fila para parar o algoritmo
-                            LQueue.Clear();
+                            LQueue = new PriorityQueue<int, Node>();
 
                             // saio do loop
                             break;
@@ -118,7 +120,7 @@ namespace SnakeBOT
                     }
 
                     // senão sai do loop antes, continuo normalmente
-                    LQueue.Enqueue(edge.To);
+                    LQueue.Enqueue(Heuristica(edge.To.Info as Pixel, To.Info as Pixel), 0, edge.To);
                 }
             }
 
@@ -130,6 +132,15 @@ namespace SnakeBOT
 
             // retorno o caminho
             return LPathNodes;
+        }
+
+        private int Heuristica(Pixel Curr, Pixel To)
+        {
+            int value = 0;
+
+            value = Math.Abs(To.Position.X - Curr.Position.X) + Math.Abs(To.Position.Y - Curr.Position.Y);
+
+            return value;
         }
 
         // retorna o caminho entre dois nós

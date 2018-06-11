@@ -96,8 +96,8 @@ namespace SnakeBOT
             {
                 // Procuro na lista se essa posição existe e faz parte do mesmo bloco de cor
                 Pixel pixel = allPixels.FirstOrDefault(p => p.Position.X == pos.X
-                                                     && p.Position.Y == pos.Y
-                                                     && p.Color == currPixel.Color);
+                                                            && p.Position.Y == pos.Y
+                                                            && p.Color == currPixel.Color);
 
                 if (pixel == null) return;
 
@@ -177,10 +177,10 @@ namespace SnakeBOT
             row = col = 0;
 
             // pego a borda de cima
-            LPixelsInCenter.OrderBy(t => t.Position.Y).Take(MapSize.Width).ToList().ForEach(topTile =>
+            LPixelsInCenter.OrderBy(t => t.Position.Y).Take(MapSize.Width).OrderBy(t => t.Position.Y).ToList().ForEach(topTile =>
             {
                 // pego a borda da esquerda
-                LPixelsInCenter.OrderBy(t => t.Position.X).Take(MapSize.Height).ToList().ForEach(leftTile =>
+                LPixelsInCenter.OrderBy(t => t.Position.X).Take(MapSize.Height).OrderBy(t => t.Position.X).ToList().ForEach(leftTile =>
                 {
                     // completo um retangulo adicionando pixels baseados nas posições das bordas
                     LFieldPixels.Add(new Pixel(new Point(topTile.Position.X, leftTile.Position.Y), Color.Blue, row, col));

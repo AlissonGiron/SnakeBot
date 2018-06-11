@@ -1,0 +1,5 @@
+C:\Users\aliss\source\repos\SnakeBOT\Models\bin\Release\Models.dll
+C:\Users\aliss\source\repos\SnakeBOT\Models\bin\Release\Models.pdb
+C:\Users\aliss\source\repos\SnakeBOT\Models\obj\Release\Models.csproj.CoreCompileInputs.cache
+C:\Users\aliss\source\repos\SnakeBOT\Models\obj\Release\Models.dll
+C:\Users\aliss\source\repos\SnakeBOT\Models\obj\Release\Models.pdb

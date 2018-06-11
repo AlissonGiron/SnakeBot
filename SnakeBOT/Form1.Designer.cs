@@ -31,8 +31,6 @@
             this.btnGerarGrafo = new System.Windows.Forms.Button();
             this.wbSnake = new System.Windows.Forms.WebBrowser();
             this.button1 = new System.Windows.Forms.Button();
-            this.txtPos = new System.Windows.Forms.TextBox();
-            this.txtBorda = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnGerarGrafo
@@ -67,28 +65,12 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // txtPos
-            // 
-            this.txtPos.Location = new System.Drawing.Point(287, 13);
-            this.txtPos.Name = "txtPos";
-            this.txtPos.Size = new System.Drawing.Size(482, 20);
-            this.txtPos.TabIndex = 4;
-            // 
-            // txtBorda
-            // 
-            this.txtBorda.Location = new System.Drawing.Point(287, 55);
-            this.txtBorda.Name = "txtBorda";
-            this.txtBorda.Size = new System.Drawing.Size(482, 20);
-            this.txtBorda.TabIndex = 5;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(801, 534);
-            this.Controls.Add(this.txtBorda);
-            this.Controls.Add(this.txtPos);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnGerarGrafo);
             this.Controls.Add(this.wbSnake);
@@ -98,7 +80,6 @@
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -107,8 +88,6 @@
         private System.Windows.Forms.Button btnGerarGrafo;
         private System.Windows.Forms.WebBrowser wbSnake;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox txtPos;
-        private System.Windows.Forms.TextBox txtBorda;
     }
 }
 

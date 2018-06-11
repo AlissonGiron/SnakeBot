@@ -26,6 +26,9 @@ namespace SnakeBOT
         private PlayManager FPlayManager;
         private List<PathNode> PrincipalPath;
         private List<PathNode> AuxPath;
+        public Graph Graph { get; set; }
+
+        public List<Node> DirectionBorder { get; set; }
 
         private void btnGerarGrafo_Click(object sender, EventArgs e)
         {
@@ -34,9 +37,13 @@ namespace SnakeBOT
             // crio o mapa do jogo
             List<Pixel> LMap = LFactory.CreateSnakeMap(this);
             Graph LGraph = new Graph();
+            Graph = LGraph;
 
             // transformo os pixels do mapa em Nodes do grafo
-            LMap.ForEach(p => LGraph.AddNode(new Node() { Info = p }));
+            foreach (var p in LMap)
+            {
+                LGraph.AddNode(new Node() { Info = p });
+            }
 
             AuxPath = new List<PathNode>();
 
@@ -52,26 +59,10 @@ namespace SnakeBOT
             // ignora por enquanto, to testando
             LGraph.FindBorderNodes();
 
+            DirectionBorder = LGraph.BorderNodes;
+
             FPlayManager = new PlayManager(LGraph);
             PrincipalPath = AdjustPath(FPlayManager.GetPath());
-
-            //var t = new Thread(() =>
-            //{
-            //    while(true)
-            //    {
-            //        Node LNode = SnakeInBorder(LGraph);
-
-            //        if (LNode != null && wbSnake.IsHandleCreated)
-            //        {
-            //            wbSnake.BeginInvoke((Action)(() =>
-            //            {
-            //                txtBorda.Text = "Col: " + (LNode.Info as Pixel).Col + " | Row: " + (LNode.Info as Pixel).Row;
-            //            }));
-            //        }
-            //    }
-            //});
-
-            //t.Start();
 
             Task.Run(() =>
             {
@@ -80,6 +71,12 @@ namespace SnakeBOT
                     FollowPath(LFactory, LGraph);
 
                     PrincipalPath = AdjustPath(AuxPath);
+
+                    if (PrincipalPath.Count == 0)
+                    {
+                        break;
+                    }
+
                     AuxPath.Clear();
                 }
             });
@@ -123,11 +120,8 @@ namespace SnakeBOT
                 AFactory.GetImage(this);
                 AGraph.SetTypes(AFactory.Image);
                 AGraph.GetSnakeHead(AFactory.Image);
-                int qtd = AGraph.Nodes.Count(n => n.NodeType.Equals(NodeType.SnakeHead) || n.NodeType.Equals(NodeType.Snake));
                 AuxPath = FPlayManager.GetPath((Node)PrincipalPath.LastOrDefault()?.nextNode);
             }
-
-            Thread.CurrentThread.Abort();
         }
 
         Rectangle LRect = new Rectangle(new Point(0, 0), new Size(40, 40));
@@ -136,30 +130,25 @@ namespace SnakeBOT
         {
             bool FoodAlive = true;
 
+            wbSnake.BeginInvoke((Action)(() =>
+            {
+                wbSnake.Document.Focus();
+            }));
+
             while (PrincipalPath.Count > 0)
             {
-                if (IsHandleCreated)
-                {
-                    wbSnake.BeginInvoke((Action)(() =>
-                    {
-                        wbSnake.Document.Focus();
-                        txtPos.Text = GetPathString(PrincipalPath);
-                    }));
-                }
-
                 var LCurrPixel = ((Pixel)((Node)PrincipalPath.FirstOrDefault().currNode).Info);
                 LRect.X = LCurrPixel.Position.X - 20;
                 LRect.Y = LCurrPixel.Position.Y - 20;
 
                 Bitmap LBitmap = GetPixels(LRect);
+
                 if (!isSnakeHead(LBitmap))
                 {
                     continue;
                 }
 
-
-                string pos = FPlayManager.ControlSnakeToTarget(PrincipalPath.FirstOrDefault());
-                SendKeys.SendWait(pos);
+                SendKeys.SendWait(FPlayManager.ControlSnakeToTarget(PrincipalPath.FirstOrDefault()));
 
                 if (FoodAlive && GotFood(AGraph))
                 {
@@ -171,6 +160,17 @@ namespace SnakeBOT
 
                 PrincipalPath.RemoveAt(0);
             }
+        }
+
+        private Node FindSnakeHead(Graph AGraph)
+        {
+            foreach (var LNode in AGraph.Nodes)
+            {
+                var LTile = GetPixels(new Rectangle((LNode.Info as Pixel).Position.X - 20, (LNode.Info as Pixel).Position.Y - 20, 40, 40));
+                if (isSnakeHead(LTile)) return LNode;
+            }
+
+            return null;
         }
 
         Rectangle Lrects2 = new Rectangle(new Point(0, 0), new Size(20, 20));

@@ -1,0 +1,14 @@
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\bin\Release\SnakeBOT.exe.config
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\bin\Release\SnakeBOT.exe
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\bin\Release\SnakeBOT.pdb
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\bin\Release\EDA.dll
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\bin\Release\Models.dll
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\bin\Release\EDA.pdb
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\bin\Release\Models.pdb
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\obj\Release\SnakeBOT.csprojResolveAssemblyReference.cache
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\obj\Release\SnakeBOT.Form1.resources
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\obj\Release\SnakeBOT.Properties.Resources.resources
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\obj\Release\SnakeBOT.csproj.GenerateResource.Cache
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\obj\Release\SnakeBOT.csproj.CoreCompileInputs.cache
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\obj\Release\SnakeBOT.exe
+C:\Users\aliss\source\repos\SnakeBOT\SnakeBOT\obj\Release\SnakeBOT.pdb
